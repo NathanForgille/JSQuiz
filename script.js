@@ -19,17 +19,17 @@ var master= [
     {
         question: "What is the purpose of JavaScript when building a site?",
         answers: ["Functionality", "Styling", "Content", "Nothing. It's black magic."],
-        correctAnswer: "0"
+        correctAnswer: 0
     },
     {
         question: "What does JavaScript have the ability to manipulate?",
         answers: ["the DOM", "the url", "my glowing personality", "the stock market"],
-        correctAnswer: "0"
+        correctAnswer: 0
     },
     {
         question: "What do you need for your JAvaScript to work?",
         answers: ["HTML", "CSS", "JQuery", "none of the above"],
-        correctAnswer: "3"
+        correctAnswer: 3
     }
 ];
 var score = 0;
@@ -38,14 +38,15 @@ var formIntro = document.getElementById("form-intro");
 var quizForm = document.getElementById("quiz-form");
 var questionText = document.getElementById("question-text");
 var answerSet = document.getElementById("answer-set");
-
+var scoreContainer = document.getElementById("js-score-status")
+var questionContainer = document.getElementById("js-question-status")
 
 function generateAnswerSet(index){
     var answerSetHtml = ``; 
             for(let i = 0; i < master[index].answers.length; i++){
             answerSetHtml += `
             <label for="${i}">${master[index].answers[i]}</label>
-            <input name="${master[index].answers[i]}" id="${i}" type="radio" />
+            <input name="${master[index].question}" id="${i}" type="radio" />
             `;
         } 
         return answerSetHtml;
@@ -65,8 +66,8 @@ function startQuiz(event){
 function evalAnswer(event) {
     // check if answer was correct
     event.preventDefault();
-    var userAnswer = document.querySelector(`input[name="${master[questionNumber].answers[0]}"]:checked`.id);
-    if (parseInt(userAnswer) == master.correctAnswer) {
+    var userAnswer = document.querySelector(`input[name="${master[questionNumber].question}"]:checked`).id;
+    if (parseInt(userAnswer) === master[questionNumber].correctAnswer) {
         console.log("Yay!");
         score += 1;
         // do what happens if they get it right (ex. add to global score variable)
@@ -74,8 +75,9 @@ function evalAnswer(event) {
         console.log("You got it wrong!")
         // take time away, whatever
     }
+    scoreContainer.innerText = `${score}`;
     console.log(userAnswer);
-    questionNumber += 1;
+    questionContainer.innerText = questionNumber += 1;
     questionText.innerText = master[questionNumber].question;
     answerSet.innerHTML = generateAnswerSet(questionNumber);
 }
