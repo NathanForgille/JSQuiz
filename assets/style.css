@@ -1,13 +1,6 @@
 
-.container { 
-    background-color: rgb(64, 65, 63);
-    height: 500px;
-    position:relative;
-    margin: 10px;
-    border-width: 5px ;
-    border-color: rgba(2, 179, 170, 0.603);
-    padding: 20px;
-    border-radius: 15px;
+.hidden {
+    display: none;
 }
 
 .center {
@@ -17,7 +10,44 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-  }
+}
+
+* {
+    box-sizing: border-box;
+}
+/*
+body {
+    background: url(js-background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;;
+}
+*/
+.progress {
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    color: white;
+    font-size: 0;
+    text-align: center;
+}
+
+.top {
+    display: inline-block;
+    width: 40%;
+    font-size: 14pt;
+    background-color: rgb(78, 199, 230);
+    color:rgb(49, 44, 44)
+}
+
+.form {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+}
+
 
 .btncontainer { 
     height: 200px;
@@ -44,14 +74,16 @@ p {
     text-align: center;
     color:  rgb(255, 255, 255);    
     font-weight: bolder;
+    background-color: rgb(49, 44, 44);
+    font-size: 18px;
 }
 
-button {
+#btnstart {
 box-sizing: content-box;
-background-color:blue;
+background-color:rgb(251, 56, 56);
 border-radius: 10px;
 border: 4px double #cccccc;
-color: #eeeeee;
+color: #000000;
 font-size: 14px;
 font-weight: bold;
 padding: 20px;
@@ -61,6 +93,21 @@ cursor: pointer;
 text-align: center;
 }
 
+#btnquiz {
+    box-sizing: content-box;
+    background-color:rgb(251, 56, 56);
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 20px;
+    width: 100px;
+    height: 25px;
+    cursor: pointer;
+    text-align: match-parent;
+    }
+
 button:hover {
-    background-color: cornflowerblue;
+    background-color: rgb(255, 251, 0);
 }

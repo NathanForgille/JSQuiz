@@ -5,31 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
-    <div class="container">
+    <main>
         <div class="center">
-            <h1>Instructions</h1>
-            <p>Try to get the highest score by answering each question correctly before time runs out! Each question
-                answered
-                incorrectly takes time off the timer. At the end of the quiz, or when the timer runs out you will be
-                asked to
-                log your high score. Good Luck!</p>
-                <div class="btncontainer">
-                    <div class="btncenter">
-                        <button type="button" id="take-quiz">Take the Quiz!</button>
+
+            <section class="progress">
+                <div class="top top-left">Question: <span class="js-question-status">0</span>/3</div>
+                <div class="top top-right">Score: <span class="js-score-status">0</span>/3</div>
+            </section>
+
+            <form class="start-form js-start" id="form-intro">
+                <fieldset class="question">
+
+                    <h1>Instructions</h1>
+
+                    <p class="instructions">Try to get the highest score by answering each question correctly before
+                        time runs out! Each question answered incorrectly takes time off the timer. At the end of the
+                        quiz, or when the timer runs out you will be asked to log your high score. Good Luck!</p>
+                    <div class="btncontainer">
+                        <div class="btncenter">
+                            <button id="btnstart" type="submit" id="take-quiz">Take the Quiz!</button>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
+            </form>
+
+            <form class="js-quiz hidden" id="quiz-form">
+                <fieldset class="question" name="answer">
+                    <h2 class="question-text" id="question-text"></h2>
+                    <div class = "answer-set" id="answer-set">
+                    </div>
+                    <div class="btncontainer">
+                        <div class="btncenter">
+                            <button id="btnquiz" role ="button" type="submit">Only Right Answers</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
-    </div>
-    
+    </main>
 
 
 
-    <script src="./assets/script.js"></script>
+
+    <script src="./script.js"></script>
 </body>
 
 </html>
