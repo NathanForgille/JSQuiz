@@ -18,7 +18,14 @@
                 <div class="top top-right">Score: <span id="js-score-status">0</span>/3</div>
             </section>
 
-            <form class="start-form js-start" id="form-intro">
+            <section class="timer">
+                <div class="timer-container">
+                    <span id="timer-container-minutes"></span>:
+                    <span id="timer-container-seconds"></span>
+                </div>
+            </section>
+
+            <form class="start-form js-start" id="quiz-intro">
                 <fieldset class="question">
 
                     <h1>Instructions</h1>
@@ -28,20 +35,32 @@
                         quiz, or when the timer runs out you will be asked to log your high score. Good Luck!</p>
                     <div class="btncontainer">
                         <div class="btncenter">
-                            <button id="btnstart" type="submit" id="take-quiz">Take the Quiz!</button>
+                            <button id="btnstart" type="submit">Take the Quiz!</button>
                         </div>
                     </div>
                 </fieldset>
             </form>
 
-            <form class="js-quiz hidden" id="quiz-form">
+            <form class="js-quiz hidden" id="quiz-main">
                 <fieldset class="question" name="answer">
                     <h2 class="question-text" id="question-text"></h2>
-                    <div class = "answer-set" id="answer-set">
+                    <div class="answer-set" id="answer-set">
                     </div>
                     <div class="btncontainer">
                         <div class="btncenter">
-                            <button id="btnquiz" role ="button" type="submit">Only Right Answers</button>
+                            <button id="btnquiz" role="button" type="submit">Only Right Answers</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <form class="hidden" id="quiz-end">
+                <fieldset class="question" name="answer">
+                    <h2 class="question-text" id="question-text">Results!</h2>
+                    <h3>Score: <span id="player-score"></span></h3>
+                    <div class="btncontainer">
+                        <div class="btncenter">
+                            <button id="btnquiz" role="button" type="submit">Let's retake this bad boy</button>
                         </div>
                     </div>
                 </fieldset>

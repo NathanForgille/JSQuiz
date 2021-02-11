@@ -1,21 +1,23 @@
-/*
--I need to develop a welcome page that has instructions, a button to start the quiz, and has style that contains my content
-
--When the quiz starts a header needs to appear that has the timer in it, and the high scores can be accessed as well
-
--each time they answer a question the submit button takes them to the next question
-
--if they also answered hte qyuestion incorrectly then time is removed from the timer
-
--the quiz is over if the user answers all the questions or if the timer hits zero.
-
--when the quiz is over, the user will be prompted to ener their initials to save their highscore
-
--if the user does not qualify for a high score then the user will not be prompted to enter anything. Instead the will be taken to a page that encourages them to study and retake the quiz
-
+/* Pseudo Code -- user stories
+- The user should land on a page to start the quiz (HTML)
+- The user should be presented with a button to start the quiz (HTML)
+- When the user clicks the start button... (JS)
+    - The intro form hides (JS)
+    - The quiz form shows (JS)
+    - The timer starts counting down (JS)
+    - The first question renders (JS)
+    - The first answer set renders (JS)
+- For each question, the user should be able to click only one possible answer (JS)
+- The user should be presented with a button to check if selected answer is correct (HTML)
+- When the user clicks the button, their selection is checked (JS)
+    - If the answer is correct, they earn a point (JS)
+    - If the answer is incorrect, time is removed from the timer (JS)
+- The user should progress to the next question (JS)
+    - If it's the last question, the user should go to the end of the quiz (JS)
 */
+
 //Global Variables declared
-var master= [
+const master = [
     {
         question: "What is the purpose of JavaScript when building a site?",
         answers: ["Functionality", "Styling", "Content", "Nothing. It's black magic."],
@@ -27,59 +29,138 @@ var master= [
         correctAnswer: 0
     },
     {
-        question: "What do you need for your JAvaScript to work?",
+        question: "What do you need for your JavaScript to work?",
         answers: ["HTML", "CSS", "JQuery", "none of the above"],
         correctAnswer: 3
     }
 ];
-var score = 0;
-var questionNumber = 0;
-var formIntro = document.getElementById("form-intro");
-var quizForm = document.getElementById("quiz-form");
-var questionText = document.getElementById("question-text");
-var answerSet = document.getElementById("answer-set");
-var scoreContainer = document.getElementById("js-score-status")
-var questionContainer = document.getElementById("js-question-status")
+let score = 0;
+let questionNumber = 0;
 
-function generateAnswerSet(index){
-    var answerSetHtml = ``; 
-            for(let i = 0; i < master[index].answers.length; i++){
-            answerSetHtml += `
-            <label for="${i}">${master[index].answers[i]}</label>
-            <input name="${master[index].question}" id="${i}" type="radio" />
+// Set variables for the timer
+const quizTime = 41000; // Total length of the quiz -- 120,000 milliseconds === 2 minutes. One extra second to compensate for the setInterval delay
+let endTime = Date.now() + quizTime; // Date.now() returns milliseconds. Quiz end time is 2 minutes in the future.
+let timerInterval; // A variable for the setInterval reference to be stored
+
+// HTML Elements
+const formIntro = document.getElementById("quiz-intro");
+const quizForm = document.getElementById("quiz-main");
+const quizEnd = document.getElementById("quiz-end");
+const questionText = document.getElementById("question-text");
+const answerSet = document.getElementById("answer-set");
+const scoreContainer = document.getElementById("js-score-status");
+const playerFinalScore = document.getElementById("player-score");
+const questionContainer = document.getElementById("js-question-status");
+const timerContainerMinutes = document.getElementById("timer-container-minutes");
+const timerContainerSeconds = document.getElementById("timer-container-seconds");
+const buttonStart = document.getElementById("btnstart")
+
+timerContainerMinutes.innerText = `0`;
+timerContainerSeconds.innerText = `40`;
+
+function endQuiz() {
+    // You need a function that ends the quiz, otherwise your last question will stay on the screen
+    // Maybe something similar to start quiz. 
+    // Have a hidden modal in your html, and un-hide it with the results at the end.
+    console.log("Boom");
+}
+
+function generateAnswerSet(index) {
+    let answerSetHtml = ``;
+    for (let i = 0; i < master[index].answers.length; i++) {
+        answerSetHtml += `
+            <label for="${i}">
+                ${master[index].answers[i]}
+                <input name="${master[index].question}" id="${i}" type="radio" />
+            </label>
+            <br />
             `;
-        } 
-        return answerSetHtml;
-}  
+    }
+    return answerSetHtml;
+}
 
-function startQuiz(event){
+function startQuiz(event) {
+    event.preventDefault();
+    // Set the endTime to be 2 minutes in the future from the current time.
+
+    endTime = Date.now() + 41000;
+
+    // Set up the timer using setInterval (for reference checkout ... https://www.w3schools.com/jsref/met_win_setinterval.asp)
+    timerInterval = setInterval(() => {
+        // Grab the current time and compare it to the quiz's end time
+        //console.log("anything");
+        const difference = endTime - Date.now();
+
+        // Calculate minutes and seconds based on the difference
+
+        const seconds = Math.floor(difference / 1000)
+
+        // If time is out, end the quiz
+        if (seconds === 0) {
+        }
+
+        // Set the inner text of the minutes and seconds container
+        timerContainerSeconds.innerText = seconds
+    }, 1000);
+    // Hide the landing form and show the quiz form
+}
+
+function startQuiz(event) {
     event.preventDefault();
     formIntro.setAttribute("class", "hidden");
     quizForm.setAttribute("class", " ");
     var firstQuestion = master[questionNumber].question;
     questionText.textContent = firstQuestion;
     var answerSetHtml = generateAnswerSet(questionNumber);
-        answerSet.innerHTML = answerSetHtml;
-}
+    answerSet.innerHTML = answerSetHtml;
+};
 
+
+// Set the first question and answerSet
+
+
+
+function progressQuiz() {
+    // The purpose of this function is to move the quiz to the next question
+    if (questionNumber === master.length - 1) {
+        // If we're at the end of the quiz, end the quiz
+    } else {
+        // If we're not at the end of the quiz, progress
+
+    }
+}
 
 function evalAnswer(event) {
     // check if answer was correct
     event.preventDefault();
-    var userAnswer = document.querySelector(`input[name="${master[questionNumber].question}"]:checked`).id;
+    const userAnswer = document.querySelector(`input[name="${master[questionNumber].question}"]:checked`).id;
     if (parseInt(userAnswer) === master[questionNumber].correctAnswer) {
-        console.log("Yay!");
-        score += 1;
-        // do what happens if they get it right (ex. add to global score variable)
+        // If they get the answer correct, add one to the score
     } else {
-        console.log("You got it wrong!")
-        // take time away, whatever
+        // if they get the answer wrong, subtract 10 seconds from the endTime of the timer. i.e. the end is 10 seconds closer to now
     }
-    scoreContainer.innerText = `${score}`;
-    console.log(userAnswer);
-    questionContainer.innerText = questionNumber += 1;
-    questionText.innerText = master[questionNumber].question;
-    answerSet.innerHTML = generateAnswerSet(questionNumber);
+    // Progress the quiz
 }
+
+// Event listeners
 quizForm.addEventListener("submit", evalAnswer)
 formIntro.addEventListener("submit", startQuiz)
+
+
+/*buttonStart.onclick(()=> {
+      formIntro.addClass("hidden");
+      console.log("this worked");
+      quizForm.addClass("show");
+      console.log("this also worked");
+      function generateAnswerSet(index){
+          let answerSetHtml = ``;
+                  for(let i = 0; i < master[index].answers.length; i++){
+                  answerSetHtml += `
+                  <label for="${i}">${master[index].answers[i]}</label>
+                  <input name="${master[index].question}" id="${i}" type="radio" />
+                  `;console.log("17");
+              }
+              return answerSetHtml;
+      }
+      return generateAnswerSet;
+  });*/
