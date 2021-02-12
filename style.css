@@ -15,15 +15,7 @@
 * {
     box-sizing: border-box;
 }
-/*
-body {
-    background: url(js-background.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;;
-}
-*/
+
 .progress {
     margin-left: auto;
     margin-right: auto;
@@ -108,6 +100,37 @@ text-align: center;
     text-align: match-parent;
     }
 
+#btnend {
+    box-sizing: content-box;
+    background-color:rgb(251, 56, 56);
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 20px;
+    width: 100px;
+    height: 25px;
+    cursor: pointer;
+    text-align: match-parent;
+}
+
+#btnretake {
+    box-sizing: content-box;
+    background-color:rgb(251, 56, 56);
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 20px;
+    width: 100px;
+    height: 25px;
+    cursor: pointer;
+    text-align: match-parent;
+}
+        
+    
 button:hover {
     background-color: rgb(255, 251, 0);
 }
