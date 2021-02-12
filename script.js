@@ -46,6 +46,7 @@ let timerInterval; // A variable for the setInterval reference to be stored
 const formIntro = document.getElementById("quiz-intro");
 const quizForm = document.getElementById("quiz-main");
 const quizEnd = document.getElementById("quiz-end");
+const quizHighscore = document.getElementById("quiz-highscore");
 const questionText = document.getElementById("question-text");
 const answerSet = document.getElementById("answer-set");
 const scoreContainer = document.getElementById("js-score-status");
@@ -53,14 +54,22 @@ const playerFinalScore = document.getElementById("player-score");
 const questionContainer = document.getElementById("js-question-status");
 const timerContainerMinutes = document.getElementById("timer-container-minutes");
 const timerContainerSeconds = document.getElementById("timer-container-seconds");
-const buttonStart = document.getElementById("btnstart")
-
+let seconds;
 timerContainerMinutes.innerText = `0`;
 timerContainerSeconds.innerText = `40`;
+const buttonEnd = document.getElementById("btnend");
+const userEntry = document.getElementsByClassName("input");
 
 function endQuiz() {
+    event.preventDefault();
     // You need a function that ends the quiz, otherwise your last question will stay on the screen
-    // Maybe something similar to start quiz. 
+    // Maybe something similar to start quiz.
+    formIntro.setAttribute("class", "hidden");
+    quizForm.setAttribute("class", "hidden");
+    quizEnd.setAttribute("class", " ");
+    playerFinalScore.innerText=score;
+    clearInterval(timerInterval);
+    buttonEnd.onclick = highScore();
     // Have a hidden modal in your html, and un-hide it with the results at the end.
     console.log("Boom");
 }
@@ -82,7 +91,7 @@ function generateAnswerSet(index) {
 function startQuiz(event) {
     event.preventDefault();
     // Set the endTime to be 2 minutes in the future from the current time.
-
+    questionContainer.innerText++;
     endTime = Date.now() + 41000;
 
     // Set up the timer using setInterval (for reference checkout ... https://www.w3schools.com/jsref/met_win_setinterval.asp)
@@ -93,40 +102,39 @@ function startQuiz(event) {
 
         // Calculate minutes and seconds based on the difference
 
-        const seconds = Math.floor(difference / 1000)
+        seconds = Math.floor(difference / 1000);
 
         // If time is out, end the quiz
         if (seconds === 0) {
+            endQuiz();
         }
 
         // Set the inner text of the minutes and seconds container
-        timerContainerSeconds.innerText = seconds
+        timerContainerSeconds.innerText = seconds;
     }, 1000);
     // Hide the landing form and show the quiz form
-}
-
-function startQuiz(event) {
-    event.preventDefault();
     formIntro.setAttribute("class", "hidden");
     quizForm.setAttribute("class", " ");
-    var firstQuestion = master[questionNumber].question;
+    const firstQuestion = master[questionNumber].question;
     questionText.textContent = firstQuestion;
-    var answerSetHtml = generateAnswerSet(questionNumber);
+    const answerSetHtml = generateAnswerSet(questionNumber);
     answerSet.innerHTML = answerSetHtml;
-};
-
-
-// Set the first question and answerSet
-
-
+    return timerInterval;
+}
 
 function progressQuiz() {
     // The purpose of this function is to move the quiz to the next question
     if (questionNumber === master.length - 1) {
         // If we're at the end of the quiz, end the quiz
+        endQuiz();
     } else {
         // If we're not at the end of the quiz, progress
-
+        questionNumber++;
+        questionContainer.innerText++;
+        const nextQuestion = master[questionNumber].question;
+        questionText.textContent = nextQuestion;
+        const answerSetHtml = generateAnswerSet(questionNumber);
+        answerSet.innerHTML = answerSetHtml;
     }
 }
 
@@ -136,31 +144,31 @@ function evalAnswer(event) {
     const userAnswer = document.querySelector(`input[name="${master[questionNumber].question}"]:checked`).id;
     if (parseInt(userAnswer) === master[questionNumber].correctAnswer) {
         // If they get the answer correct, add one to the score
+        score++;
+        scoreContainer.innerText=score;
     } else {
         // if they get the answer wrong, subtract 10 seconds from the endTime of the timer. i.e. the end is 10 seconds closer to now
+        endTime -= 10000;
     }
     // Progress the quiz
+    progressQuiz();
 }
 
+function highScore(){
+    formIntro.setAttribute("class", "hidden");
+    quizForm.setAttribute("class", "hidden");
+    quizEnd.setAttribute("class", "hidden");
+    quizHighscore.setAttribute("class", " ");
+    const saveVal = document.getElementById("btnsaveval");
+    saveVal.onclick = function(){
+        event.preventDefault();
+        if (userEntry.val() !== "undefined"){
+            localStorage.setItem("Winning", userEntry.val());
+        }};console.log("what is happening");
+    // localStorage.getItem("Winning", userEntry.val().append());
+}
+ 
 // Event listeners
-quizForm.addEventListener("submit", evalAnswer)
-formIntro.addEventListener("submit", startQuiz)
+quizForm.addEventListener("submit", evalAnswer);
+formIntro.addEventListener("submit", startQuiz);
 
-
-/*buttonStart.onclick(()=> {
-      formIntro.addClass("hidden");
-      console.log("this worked");
-      quizForm.addClass("show");
-      console.log("this also worked");
-      function generateAnswerSet(index){
-          let answerSetHtml = ``;
-                  for(let i = 0; i < master[index].answers.length; i++){
-                  answerSetHtml += `
-                  <label for="${i}">${master[index].answers[i]}</label>
-                  <input name="${master[index].question}" id="${i}" type="radio" />
-                  `;console.log("17");
-              }
-              return answerSetHtml;
-      }
-      return generateAnswerSet;
-  });*/
