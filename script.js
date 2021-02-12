@@ -58,7 +58,8 @@ let seconds;
 timerContainerMinutes.innerText = `0`;
 timerContainerSeconds.innerText = `40`;
 const buttonEnd = document.getElementById("btnend");
-const userEntry = document.getElementsByClassName("input");
+const userEntry = document.getElementById("given-input");
+const highScoreList = document.getElementById("highscorelist");
 
 function endQuiz() {
     event.preventDefault();
@@ -155,17 +156,15 @@ function evalAnswer(event) {
 }
 
 function highScore(){
-    formIntro.setAttribute("class", "hidden");
-    quizForm.setAttribute("class", "hidden");
     quizEnd.setAttribute("class", "hidden");
     quizHighscore.setAttribute("class", " ");
     const saveVal = document.getElementById("btnsaveval");
     saveVal.onclick = function(){
         event.preventDefault();
-        if (userEntry.val() !== "undefined"){
-            localStorage.setItem("Winning", userEntry.val());
+        if (userEntry.value !== "undefined"){
+            localStorage.setItem("Winning", userEntry.value);
         }};console.log("what is happening");
-    // localStorage.getItem("Winning", userEntry.val().append());
+        highScoreList.innerText = localStorage.getItem("Winning", userEntry.value);
 }
  
 // Event listeners
