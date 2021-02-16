@@ -26,8 +26,8 @@ let score = 0;
 let questionNumber = 0;
 
 // Set variables for the timer
-const quizTime = 41000; // Total length of the quiz -- 120,000 milliseconds === 2 minutes. One extra second to compensate for the setInterval delay
-let endTime = Date.now() + quizTime; // Date.now() returns milliseconds. Quiz end time is 2 minutes in the future.
+const quizTime = 41000; // Total length of the quiz -- 41,000 milliseconds === 40 seconds. One extra second to compensate for the setInterval delay
+let endTime = Date.now() + quizTime; // Date.now() returns milliseconds. Quiz end time is 40 seconds in the future.
 let timerInterval; // A variable for the setInterval reference to be stored
 
 // HTML Elements
@@ -56,17 +56,13 @@ function startQuiz(event) {
     // Set the endTime to be 2 minutes in the future from the current time.
     questionContainer.innerText++;
     endTime = Date.now() + 41000;
-
-    // Set up the timer using setInterval (for reference checkout ... https://www.w3schools.com/jsref/met_win_setinterval.asp)
+    // Set up the timer using setInterval
     timerInterval = setInterval(() => {
         // Grab the current time and compare it to the quiz's end time
         //console.log("anything");
         const difference = endTime - Date.now();
-
         // Calculate minutes and seconds based on the difference
-
         seconds = Math.floor(difference / 1000);
-
         // If time is out, end the quiz
         if (seconds === 0) {
             endQuiz();
@@ -102,10 +98,10 @@ function generateAnswerSet(index) {
 function progressQuiz() {
     // The purpose of this function is to move the quiz to the next question
     if (questionNumber === master.length - 1) {
-        // If we're at the end of the quiz, end the quiz
+        // If we are at the end of the quiz, end the quiz
         endQuiz();
     } else {
-        // If we're not at the end of the quiz, progress
+        // If we are not at the end of the quiz, progress
         questionNumber++;
         questionContainer.innerText++;
         const nextQuestion = master[questionNumber].question;
@@ -115,8 +111,8 @@ function progressQuiz() {
     }
 }
 
-function evalAnswer(event) {
     // check if answer was correct
+function evalAnswer(event) {
     event.preventDefault();
     const userAnswer = document.querySelector(`input[name="${master[questionNumber].question}"]:checked`).id;
     if (parseInt(userAnswer) === master[questionNumber].correctAnswer) {
@@ -130,10 +126,8 @@ function evalAnswer(event) {
     // Progress the quiz
     progressQuiz();
 }
-
-function endQuiz() {
     // You need a function that ends the quiz, otherwise your last question will stay on the screen
-    // Maybe something similar to start quiz.
+function endQuiz() {
     formIntro.setAttribute("class", "hidden");
     quizForm.setAttribute("class", "hidden");
     quizEnd.setAttribute("class", " ");
@@ -146,8 +140,6 @@ function hideShowHighScore(){
     event.preventDefault()
     quizEnd.setAttribute("class", "hidden");
     quizHighscore.setAttribute("class", " ");
-
-    // highScoreList.innerText = localStorage.getItem(`Winning-${i}`, userEntry.value);
 }
  
 function highScoreEntry(){
@@ -164,6 +156,7 @@ function resetQuiz(){
     questionNumber = 0;
     questionContainer.innerText = 0;
     score = 0;
+    scoreContainer.innerText = 0;
     quizHighscore.setAttribute("class", "hidden");
     formIntro.setAttribute("class", " ");
 }
@@ -175,11 +168,3 @@ buttonEnd.addEventListener("click", hideShowHighScore);
 saveVal.addEventListener("click", highScoreEntry);
 btnRetake.addEventListener("click", resetQuiz)
 
-
-// high scores local storage code
-    //     if (userEntry.value !== "undefined"){
-    //         let i;
-    //         for (i = 0; i < userEntry.value.length; i++) {
-    //             
-    //         }
-    //     }

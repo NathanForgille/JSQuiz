@@ -1,6 +1,9 @@
-# JSQuiz
+## JSQuiz
 
-This is a quiz application ran in the browser. The quiz was developed to test the users knowledge of JavaScript, as well as my own understanding of the language. 
+- This is a quiz application ran in the browser. The quiz was developed to minimally test the users knowledge of JavaScript.
+
+## Installation
+- Nothing is required of the User
 
 ## Usage
 - The user should land on a page to start the quiz (HTML)
@@ -19,6 +22,33 @@ This is a quiz application ran in the browser. The quiz was developed to test th
 - The user should progress to the next question (JS)
     - If it's the last question, the user should go to the high score page (JS)
 - The user may enter their prefered name and submit their high score (JS)
-    - The users input will be stored in local storage and appended to the page as well (JS)
+    - The users input will be stored in an array and appended to the page, manipulating the DOM (JS)
 - The user then has the option to retake the quiz (JS)
-    - The user may click on the retake quiz button, and will be taken to the first question form (JS)
+    - The user may click on the retake quiz button, and will be taken to the quiz intro form (JS)
+
+## License
+- MIT License
+
+## Screenshots
+- Quiz Intro
+![alt text](./assets/images/quiz-intro.PNG)
+- Quiz Start
+![alt text](./assets/images/quiz-start.PNG)
+- Quiz Progression
+![alt text](./assets/images/quiz-progression.PNG)
+- Quiz High Score
+![alt text](./assets/images/quiz-high-score.PNG)
+
+## Links
+https://github.com/NathanForgille/JSQuiz/
+https://nathanforgille.github.io/JSQuiz/
+
+## Libraries
+- None Used
+
+## Credit
+- Contributor
+    - Zack Zboncak, https://github.com/zzboncak
+
+## Authors
+- Nathan Forgille
