@@ -1,20 +1,8 @@
-/* Pseudo Code -- user stories
-- The user should land on a page to start the quiz (HTML)
-- The user should be presented with a button to start the quiz (HTML)
-- When the user clicks the start button... (JS)
-    - The intro form hides (JS)
-    - The quiz form shows (JS)
-    - The timer starts counting down (JS)
-    - The first question renders (JS)
-    - The first answer set renders (JS)
-- For each question, the user should be able to click only one possible answer (JS)
-- The user should be presented with a button to check if selected answer is correct (HTML)
-- When the user clicks the button, their selection is checked (JS)
-    - If the answer is correct, they earn a point (JS)
-    - If the answer is incorrect, time is removed from the timer (JS)
-- The user should progress to the next question (JS)
-    - If it's the last question, the user should go to the end of the quiz (JS)
-*/
+// Pseudo Code -- user stories
+// As a user I am here to test my knowledge on javascript
+// I want to be able to progress through a timed quiz that displays the time I have left and the score I have throughout.
+// When I have finished the quiz, I want to be able to store my name and high score
+// When I am finished with the storage of my high score, I would like the option to retake the quiz as well
 
 //Global Variables declared
 const master = [
@@ -60,34 +48,7 @@ timerContainerSeconds.innerText = `40`;
 const buttonEnd = document.getElementById("btnend");
 const userEntry = document.getElementById("given-input");
 const highScoreList = document.getElementById("highscorelist");
-
-function endQuiz() {
-    event.preventDefault();
-    // You need a function that ends the quiz, otherwise your last question will stay on the screen
-    // Maybe something similar to start quiz.
-    formIntro.setAttribute("class", "hidden");
-    quizForm.setAttribute("class", "hidden");
-    quizEnd.setAttribute("class", " ");
-    playerFinalScore.innerText=score;
-    clearInterval(timerInterval);
-    buttonEnd.onclick = highScore();
-    // Have a hidden modal in your html, and un-hide it with the results at the end.
-    console.log("Boom");
-}
-
-function generateAnswerSet(index) {
-    let answerSetHtml = ``;
-    for (let i = 0; i < master[index].answers.length; i++) {
-        answerSetHtml += `
-            <label for="${i}">
-                ${master[index].answers[i]}
-                <input name="${master[index].question}" id="${i}" type="radio" />
-            </label>
-            <br />
-            `;
-    }
-    return answerSetHtml;
-}
+const saveVal = document.getElementById("btnsaveval");
 
 function startQuiz(event) {
     event.preventDefault();
@@ -123,6 +84,20 @@ function startQuiz(event) {
     return timerInterval;
 }
 
+function generateAnswerSet(index) {
+    let answerSetHtml = ``;
+    for (let i = 0; i < master[index].answers.length; i++) {
+        answerSetHtml += `
+            <label for="${i}">
+                ${master[index].answers[i]}
+                <input name="${master[index].question}" id="${i}" type="radio" />
+            </label>
+            <br />
+            `;
+    }
+    return answerSetHtml;
+}
+
 function progressQuiz() {
     // The purpose of this function is to move the quiz to the next question
     if (questionNumber === master.length - 1) {
@@ -155,19 +130,39 @@ function evalAnswer(event) {
     progressQuiz();
 }
 
-function highScore(){
+function endQuiz() {
+    // You need a function that ends the quiz, otherwise your last question will stay on the screen
+    // Maybe something similar to start quiz.
+    formIntro.setAttribute("class", "hidden");
+    quizForm.setAttribute("class", "hidden");
+    quizEnd.setAttribute("class", " ");
+    playerFinalScore.innerText=score;
+    clearInterval(timerInterval);
+}
+
+const highScores = [];
+function hideShowHighScore(){
     quizEnd.setAttribute("class", "hidden");
     quizHighscore.setAttribute("class", " ");
-    const saveVal = document.getElementById("btnsaveval");
-    saveVal.onclick = function(){
-        event.preventDefault();
-        if (userEntry.value !== "undefined"){
-            localStorage.setItem("Winning", userEntry.value);
-        }};console.log("what is happening");
-        highScoreList.innerText = localStorage.getItem("Winning", userEntry.value);
+
+    // highScoreList.innerText = localStorage.getItem(`Winning-${i}`, userEntry.value);
 }
  
+function highScoreEntry(){
+    highScores.push({name:userEntry.value, highScore:score});
+        
+}
 // Event listeners
 quizForm.addEventListener("submit", evalAnswer);
 formIntro.addEventListener("submit", startQuiz);
+buttonEnd.addEventListener("click", hideShowHighScore)
+saveVal.addEventListener("click", highScoreEntry)
 
+
+// high scores local storage code
+    //     if (userEntry.value !== "undefined"){
+    //         let i;
+    //         for (i = 0; i < userEntry.value.length; i++) {
+    //             localStorage.setItem(`Winning-${i}`, userEntry.value);
+    //         }
+    //     }
