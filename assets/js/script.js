@@ -49,6 +49,7 @@ const buttonEnd = document.getElementById("btnend");
 const userEntry = document.getElementById("given-input");
 const highScoreList = document.getElementById("highscorelist");
 const saveVal = document.getElementById("btnsaveval");
+const btnRetake = document.getElementById("btnretake");
 
 function startQuiz(event) {
     event.preventDefault();
@@ -142,6 +143,7 @@ function endQuiz() {
 
 const highScores = [];
 function hideShowHighScore(){
+    event.preventDefault()
     quizEnd.setAttribute("class", "hidden");
     quizHighscore.setAttribute("class", " ");
 
@@ -150,19 +152,34 @@ function hideShowHighScore(){
  
 function highScoreEntry(){
     highScores.push({name:userEntry.value, highScore:score});
-        
+    let highScoreHtml = ""
+    highScores.forEach(highScoreEntry => {
+        highScoreHtml += `<li>${highScoreEntry.name}: ${highScoreEntry.highScore}</li>`
+    });
+    highScoreList.innerHTML= highScoreHtml;
 }
+
+function resetQuiz(){
+    event.preventDefault();
+    questionNumber = 0;
+    questionContainer.innerText = 0;
+    score = 0;
+    quizHighscore.setAttribute("class", "hidden");
+    formIntro.setAttribute("class", " ");
+}
+
 // Event listeners
 quizForm.addEventListener("submit", evalAnswer);
 formIntro.addEventListener("submit", startQuiz);
-buttonEnd.addEventListener("click", hideShowHighScore)
-saveVal.addEventListener("click", highScoreEntry)
+buttonEnd.addEventListener("click", hideShowHighScore);
+saveVal.addEventListener("click", highScoreEntry);
+btnRetake.addEventListener("click", resetQuiz)
 
 
 // high scores local storage code
     //     if (userEntry.value !== "undefined"){
     //         let i;
     //         for (i = 0; i < userEntry.value.length; i++) {
-    //             localStorage.setItem(`Winning-${i}`, userEntry.value);
+    //             
     //         }
     //     }
