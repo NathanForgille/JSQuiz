@@ -157,6 +157,10 @@ function resetQuiz(){
     questionContainer.innerText = 0;
     score = 0;
     scoreContainer.innerText = 0;
+    endTime = Date.now() + 40000;
+    const difference = endTime - Date.now();
+    seconds = Math.floor(difference / 1000);
+    timerContainerSeconds.innerText = seconds;
     quizHighscore.setAttribute("class", "hidden");
     formIntro.setAttribute("class", " ");
 }
